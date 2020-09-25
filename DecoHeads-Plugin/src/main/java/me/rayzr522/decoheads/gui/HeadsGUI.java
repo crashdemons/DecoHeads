@@ -189,20 +189,13 @@ public class HeadsGUI extends GUI {
                 return;
             }
         }
-
-        ItemStack giveItem = head.getItem();
-
-        String name = plugin.tr(false, "item.name", head.getName());
-        if (name.isEmpty()) {
-            ItemUtils.setName(giveItem, "");
-        } else {
-            ItemUtils.setName(giveItem, name);
-        }
-
-        String lore = plugin.tr(false, "item.lore");
-        if (!lore.isEmpty()) {
-            ItemUtils.setLore(giveItem, lore.split("\n"));
-        }
+        
+        /*
+        kind of a roundabout way to do this, but since the styled-item method is in HeadManager, this is the easiest way.
+        we could move it to another class though, depending on where you feel comfortable putting that code
+        However, this API method should exist regardless.
+        */
+        ItemStack giveItem = plugin.getApiInstance().createHeadItem(head, true, true);
 
         e.getPlayer().getInventory().addItem(giveItem);
     }

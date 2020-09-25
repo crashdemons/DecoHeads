@@ -14,11 +14,12 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import me.rayzr522.decoheads.api.ApiHead;
 
 /**
  * @author Rayzr
  */
-public class Head {
+public class Head implements ApiHead{
     private String name;
     private Category category;
 

@@ -17,8 +17,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.inventivetalent.update.spiget.SpigetUpdate;
 
 import java.util.logging.Level;
+import me.rayzr522.decoheads.api.ApiProvider;
+import me.rayzr522.decoheads.api.DecoHeadsAPI;
+import me.rayzr522.decoheads.api.DecoHeadsPlugin;
 
-public class DecoHeads extends JavaPlugin {
+public class DecoHeads extends JavaPlugin implements DecoHeadsPlugin {
     private static DecoHeads instance;
 
     private ConfigHandler configHandler;
@@ -28,14 +31,27 @@ public class DecoHeads extends JavaPlugin {
 
     private EconomyWrapper economy;
     private SpigetUpdate updater;
+    
+    private DecoHeadsAPI api;
 
     public static DecoHeads getInstance() {
         return instance;
     }
+    
+    @Override
+    public DecoHeadsAPI getApiInstance(){
+        return api;
+    }
+    
+    @Override
+    public void onLoad() {
+        instance = this;
+        headManager = new HeadManager(this);
+        api = new ApiProvider(this, headManager, true);//create and registert API+Plugin
+    }
 
     @Override
     public void onEnable() {
-        instance = this;
 
         if (Reflector.getMinorVersion() < 8) {
             getLogger().severe("DecoHeads is only compatible with Minecraft 1.8+");
@@ -43,7 +59,6 @@ public class DecoHeads extends JavaPlugin {
             return;
         }
 
-        headManager = new HeadManager(this);
         configHandler = new ConfigHandler(this);
         settings = new Settings(this);
 

@@ -1,5 +1,6 @@
 package me.rayzr522.decoheads;
 
+import me.rayzr522.decoheads.api.ApiCategory;
 import me.rayzr522.decoheads.gui.system.Dimension;
 import me.rayzr522.decoheads.util.TextUtils;
 import org.bukkit.command.CommandSender;
@@ -7,7 +8,7 @@ import org.bukkit.command.CommandSender;
 /**
  * @author Rayzr
  */
-public enum Category {
+public enum Category implements ApiCategory{
     FOOD("food", new Dimension(1, 1)),
     TECHNOLOGY("tech", new Dimension(1, 2)),
     LETTERS("letters", new Dimension(1, 3)),
@@ -36,6 +37,7 @@ public enum Category {
     public String getKey() {
         return key;
     }
+    
 
     /**
      * @return the position of this Category in the categories GUI

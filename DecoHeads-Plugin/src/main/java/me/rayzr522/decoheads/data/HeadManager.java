@@ -11,6 +11,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import me.rayzr522.decoheads.api.ApiHead;
+import me.rayzr522.decoheads.util.ItemUtils;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Rayzr
@@ -99,5 +102,29 @@ public class HeadManager {
 
     public void removeHead(Head head) {
         heads.remove(head);
+    }
+    
+    //Creates a stylized version of the head.
+    //Note: this was added because it was coded into the GUI and wasn't exposed to outside code (like the API)
+    public ItemStack createHeadItem(ApiHead head, boolean addName, boolean addLore){
+        ItemStack giveItem = head.getItem();
+        
+        if(addName){
+            String name = plugin.tr(false, "item.name", head.getName());
+            if (name.isEmpty()) {
+                ItemUtils.setName(giveItem, "");
+            } else {
+                ItemUtils.setName(giveItem, name);
+            }
+        }
+
+        if(addLore){
+            String lore = plugin.tr(false, "item.lore");
+            if (!lore.isEmpty()) {
+                ItemUtils.setLore(giveItem, lore.split("\n"));
+            }
+            return giveItem;
+        }
+        return giveItem;
     }
 }
